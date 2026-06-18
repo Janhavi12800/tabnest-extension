@@ -329,6 +329,14 @@ function renderAccessState() {
   const overlay = $('#locked-overlay');
   if (!banner || !overlay) return;
 
+  // Pro user → never show the trial banner (sidebar overrides max-height tricks).
+  if (accountState.status === 'pro') {
+    banner.style.display = 'none';
+    overlay.classList.remove('show');
+    return;
+  }
+  banner.style.display = '';
+
   if (accountState.status === 'trial') {
     overlay.classList.remove('show');
     const left = (accountState.trialEnd || 0) - Date.now();
@@ -1158,7 +1166,9 @@ function setupListeners() {
       const ok = await confirmModal('Sign out of Pro?', `${proState.email || 'You'} will lose access on this browser. (Your purchase is safe — sign back in anytime.)`);
       if (!ok) return;
       await deactivatePro();
+      accountState = await getAccount();
       proState = await getProState();
+      renderAccessState();
       renderProStatus();
       renderThemePicker();
       renderCustomNests();

@@ -82,11 +82,140 @@ function goTo(n) {
 
 /* ---------- Signup ---------- */
 
+let mode = 'signup'; // 'signup' or 'signin'
+
 function setupSignup() {
   $('#send-code-btn')?.addEventListener('click', doSignUp);
   $('#signup-email')?.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') doSignUp();
+    if (e.key === 'Enter') {
+      if (mode === 'signup') doSignUp();
+      else doSignIn();
+    }
   });
+  $('#signin-now-btn')?.addEventListener('click', doSignIn);
+  $('#signin-code-input')?.addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6);
+  });
+  $('#signin-code-input')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') doSignIn();
+  });
+  $('#toggle-signin')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    setMode('signin');
+  });
+  $('#toggle-signup')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    setMode('signup');
+  });
+  $('#resend-code-link')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    doResendCode();
+  });
+}
+
+function setMode(newMode) {
+  mode = newMode;
+  const isSignIn = (mode === 'signin');
+  $('#signup-title').textContent = isSignIn ? 'Sign in to your account' : 'Sign up with your email';
+  $('#signup-lead').textContent = isSignIn
+    ? 'Enter the same email + 6-digit code from your purchase email. (We never generate new codes — same code works on every device.)'
+    : 'We\'ll email you a 6-digit code to activate. No password, no spam.';
+  $('#code-field').style.display = isSignIn ? '' : 'none';
+  $('#send-code-btn').style.display = isSignIn ? 'none' : '';
+  $('#signin-now-btn').style.display = isSignIn ? '' : 'none';
+  $('#toggle-signin').style.display = isSignIn ? 'none' : '';
+  $('#toggle-signup').style.display = isSignIn ? '' : 'none';
+  $('#resend-code-link') && ($('#resend-code-link').style.display = isSignIn ? 'inline' : 'none');
+  const errEl = $('#signup-error');
+  if (errEl) { errEl.textContent = ''; errEl.classList.remove('success'); }
+  setTimeout(() => (isSignIn ? $('#signin-code-input') : $('#signup-email'))?.focus(), 50);
+}
+
+async function doResendCode() {
+  const email = ($('#signup-email')?.value || '').trim();
+  const errEl = $('#signup-error');
+  errEl.textContent = '';
+  errEl.classList.remove('success');
+
+  if (!email || !/\S+@\S+\.\S+/.test(email)) {
+    errEl.textContent = 'Enter your email first, then click "Resend code".';
+    $('#signup-email').focus();
+    return;
+  }
+
+  errEl.textContent = 'Sending your code…';
+
+  try {
+    const url = new URL(TABNEST_CONFIG.VERIFY_URL);
+    url.searchParams.set('action', 'resend-code');
+    url.searchParams.set('email', email);
+    const res = await fetch(url.toString());
+    const data = await res.json();
+    if (data.ok) {
+      errEl.classList.add('success');
+      errEl.textContent = '✓ Code re-sent — check your email (same code, not new).';
+    } else if (data.error === 'no_account') {
+      errEl.textContent = 'No account found for that email. Sign up to start a trial.';
+    } else {
+      errEl.textContent = data.error || 'Could not resend. Try again.';
+    }
+  } catch {
+    errEl.textContent = 'Couldn\'t reach the server. Check your connection.';
+  }
+}
+
+async function doSignIn() {
+  const email = ($('#signup-email')?.value || '').trim();
+  const code = ($('#signin-code-input')?.value || '').trim();
+  const errEl = $('#signup-error');
+  const btn = $('#signin-now-btn');
+  errEl.textContent = '';
+  errEl.classList.remove('success');
+
+  if (!email || !/\S+@\S+\.\S+/.test(email)) {
+    errEl.textContent = 'Please enter the email you used at purchase.';
+    $('#signup-email').focus();
+    return;
+  }
+  if (!/^\d{6}$/.test(code)) {
+    errEl.textContent = 'Activation code should be 6 digits.';
+    $('#signin-code-input').focus();
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Signing in…';
+
+  const r = await verifyCode(email, code);
+
+  btn.disabled = false;
+  btn.textContent = 'Sign in';
+
+  if (r.ok) {
+    signedUp = true;
+    verified = true;
+    errEl.classList.add('success');
+    errEl.textContent = r.status === 'pro'
+      ? '✓ Welcome back, Pro!'
+      : '✓ Signed in — trial active.';
+    if (r.status === 'pro') {
+      const done = $('#done-message');
+      if (done) done.textContent = 'You\'re signed back in to TabNest Pro. All features unlocked.';
+    }
+    setTimeout(() => goTo(4), 800);
+    return;
+  }
+
+  const e = String(r.error || '').toLowerCase();
+  if (e.includes('invalid')) {
+    errEl.innerHTML = 'Wrong email or code. <a href="#" id="lost-code-link" class="mode-toggle">Lost your code?</a>';
+    $('#lost-code-link')?.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      errEl.innerHTML = 'Email <a href="mailto:support@tabnest.app">support@tabnest.app</a> with your purchase email — we\'ll resend the code.';
+    });
+  } else {
+    errEl.textContent = r.error || 'Sign-in failed.';
+  }
 }
 
 async function doSignUp() {
@@ -124,9 +253,15 @@ async function doSignUp() {
   // Friendly error mapping
   const e = String(r.error || '').toLowerCase();
   if (e.includes('device_already_trialed')) {
-    errEl.innerHTML = '🔒 This device already had a trial. <a href="' + TABNEST_CONFIG.PURCHASE_URL + '" target="_blank">Subscribe ₹100 lifetime</a> to keep using TabNest.';
+    errEl.innerHTML = '🔒 This device already had a trial. <a href="' + TABNEST_CONFIG.PURCHASE_URL + '" target="_blank">Subscribe ₹100 / year</a> to keep using TabNest.';
   } else if (e.includes('email_already_used')) {
-    errEl.textContent = 'This email already had a trial that ended. Use a different email, or subscribe.';
+    errEl.innerHTML = 'This email already has an account. <a href="#" id="switch-to-signin" class="mode-toggle">Sign in instead →</a>';
+    setTimeout(() => {
+      $('#switch-to-signin')?.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        setMode('signin');
+      });
+    }, 10);
   } else if (e.includes('server isn\'t configured') || e.includes('server_not_configured')) {
     errEl.textContent = 'Pro server isn\'t configured on this build yet. (Owner: set VERIFY_URL in config.js)';
   } else {
@@ -200,7 +335,7 @@ async function doVerify() {
 
   const e = String(r.error || '').toLowerCase();
   if (e.includes('trial_expired')) {
-    errEl.innerHTML = '⏰ This trial ended. <a href="' + TABNEST_CONFIG.PURCHASE_URL + '" target="_blank">Subscribe ₹100 lifetime</a> to keep using TabNest.';
+    errEl.innerHTML = '⏰ This trial ended. <a href="' + TABNEST_CONFIG.PURCHASE_URL + '" target="_blank">Subscribe ₹100 / year</a> to keep using TabNest.';
   } else if (e.includes('invalid')) {
     errEl.textContent = 'Wrong code. Check your email and try again.';
   } else {

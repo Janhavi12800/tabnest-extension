@@ -212,7 +212,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
           type: 'basic',
           iconUrl: 'icons/icon128.png',
           title: '🪺 Your TabNest trial ended',
-          message: `Subscribe ₹${TABNEST_CONFIG.PRICE_INR} lifetime to keep using TabNest.`,
+          message: `Subscribe ₹${TABNEST_CONFIG.PRICE_INR} / year to keep using TabNest.`,
           priority: 2
         });
       } catch {}

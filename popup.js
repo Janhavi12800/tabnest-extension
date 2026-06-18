@@ -64,10 +64,10 @@ async function renderProStrip() {
       <span>Subscribe ₹100 to keep TabNest forever</span>`;
   } else if (acc.status === 'expired') {
     text.innerHTML = `<strong>🔒 Trial ended</strong>
-      <span>Subscribe ₹100 lifetime · all features back</span>`;
+      <span>Subscribe ₹100 / year · all features back</span>`;
   } else {
     text.innerHTML = `<strong>✨ Unlock TabNest Pro</strong>
-      <span>7 days free, then ₹100 lifetime</span>`;
+      <span>7 days free, then ₹100 / year</span>`;
   }
 }
 

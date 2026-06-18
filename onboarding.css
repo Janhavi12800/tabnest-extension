@@ -430,6 +430,28 @@ body {
 }
 .signup-hint a:hover { text-decoration: underline; }
 
+.mode-toggle {
+  display: inline-block;
+  font-size: 13px;
+  color: var(--brown-primary) !important;
+  font-weight: 700;
+  text-decoration: underline !important;
+  text-decoration-style: dotted !important;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.mode-toggle:hover {
+  color: var(--brown-dark) !important;
+}
+
+#signin-code-input {
+  text-align: center;
+  letter-spacing: 8px;
+  font-weight: 700;
+  font-size: 22px;
+  font-family: 'Quicksand', monospace;
+}
+
 /* ---------- Navigation ---------- */
 .nav {
   width: 100%;

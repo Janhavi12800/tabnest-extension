@@ -2434,7 +2434,7 @@ kbd {
   backdrop-filter: blur(3px);
   align-items: center;
   justify-content: center;
-  z-index: 200;
+  z-index: 600; /* above locked-overlay (500) so Sign-in / Switch modals appear on top */
   animation: fadein 0.18s ease;
 }
 .modal-overlay.show { display: flex; }

@@ -53,7 +53,7 @@
           <div class="trial-banner-emoji">🎁</div>
           <div>
             <strong>7 days free, all features unlocked</strong>
-            <span>then ₹100 lifetime — no subscription, no renewals.</span>
+            <span>then ₹100 / year — simple subscription.</span>
           </div>
         </div>
       </section>
@@ -61,16 +61,25 @@
       <!-- Slide 2: Email signup -->
       <section class="slide" data-step="2">
         <div class="hero-emoji">📧</div>
-        <h1 class="caveat">Sign up with your email</h1>
-        <p class="lead">We'll email you a 6-digit code to activate. No password, no spam.</p>
+        <h1 class="caveat" id="signup-title">Sign up with your email</h1>
+        <p class="lead" id="signup-lead">We'll email you a 6-digit code to activate. No password, no spam.</p>
         <div class="signup-card">
           <div class="signup-field">
             <label for="signup-email">Your email</label>
             <input type="email" id="signup-email" placeholder="you@example.com" autocomplete="email" />
           </div>
+          <div class="signup-field signin-only-field" id="code-field" style="display:none">
+            <label for="signin-code-input">6-digit activation code</label>
+            <input type="text" id="signin-code-input" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="123456" autocomplete="one-time-code" />
+          </div>
           <button class="primary-btn full" id="send-code-btn">Send me a code →</button>
+          <button class="primary-btn full signin-only-field" id="signin-now-btn" style="display:none">Sign in</button>
           <div class="signup-error" id="signup-error"></div>
           <div class="signup-hint">
+            <a href="#" id="toggle-signin" class="mode-toggle">Already paid? Sign in →</a>
+            <a href="#" id="toggle-signup" class="mode-toggle" style="display:none">← Back to sign up</a>
+            <a href="#" id="resend-code-link" class="mode-toggle" style="display:none; margin-left:14px">Lost your code? Resend</a>
+            <br><br>
             🔒 We only use your email to verify your account. <a href="https://janhavi12800.github.io/tabnest-website/privacy.html" target="_blank" rel="noopener">Privacy policy</a>
           </div>
         </div>
