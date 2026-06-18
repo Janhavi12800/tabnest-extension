@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="forest">
+<head>
+  <meta charset="UTF-8">
+  <title>TabNest — Tab Organizer, Manager & Memory Saver</title>
+  <link rel="icon" href="icons/icon48.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="themes.css">
+</head>
+<body>
+  <div class="bg-decor">
+    <svg class="leaf leaf-1" viewBox="0 0 60 60"><path d="M30 5 C 15 15 10 35 30 55 C 50 35 45 15 30 5 Z" fill="currentColor"/></svg>
+    <svg class="leaf leaf-2" viewBox="0 0 60 60"><path d="M30 5 C 15 15 10 35 30 55 C 50 35 45 15 30 5 Z" fill="currentColor"/></svg>
+    <svg class="leaf leaf-3" viewBox="0 0 60 60"><path d="M30 5 C 15 15 10 35 30 55 C 50 35 45 15 30 5 Z" fill="currentColor"/></svg>
+    <svg class="leaf leaf-4" viewBox="0 0 60 60"><path d="M30 5 C 15 15 10 35 30 55 C 50 35 45 15 30 5 Z" fill="currentColor"/></svg>
+  </div>
+
+  <div class="dashboard with-sidebar">
+    <!-- ============ Sidebar ============ -->
+    <aside class="side-nav">
+      <a class="nav-brand" href="#">
+        <span class="brand-emoji">🪺</span>
+        <div>
+          <div class="brand-name">TabNest</div>
+          <div class="brand-tag">tab organizer</div>
+        </div>
+      </a>
+
+      <nav class="nav-items">
+        <a class="nav-item active" data-view="nests">
+          <span class="nav-ico">🪺</span>
+          <span class="nav-label">Nests</span>
+          <span class="nav-badge" id="nav-count-nests"></span>
+        </a>
+        <a class="nav-item" data-view="workspaces">
+          <span class="nav-ico">🌿</span>
+          <span class="nav-label">Workspaces</span>
+          <span class="nav-badge" id="nav-count-workspaces"></span>
+        </a>
+        <a class="nav-item" data-view="closed">
+          <span class="nav-ico">🔍</span>
+          <span class="nav-label">Closed</span>
+          <span class="nav-badge" id="nav-count-closed"></span>
+        </a>
+        <a class="nav-item" data-view="reminders">
+          <span class="nav-ico">🔔</span>
+          <span class="nav-label">Reminders</span>
+          <span class="nav-badge" id="nav-count-reminders"></span>
+        </a>
+        <a class="nav-item" data-view="stats">
+          <span class="nav-ico">📊</span>
+          <span class="nav-label">Stats</span>
+        </a>
+        <a class="nav-item" data-view="settings">
+          <span class="nav-ico">⚙️</span>
+          <span class="nav-label">Settings</span>
+        </a>
+      </nav>
+
+      <div class="nav-bottom">
+        <div class="trial-banner" id="trial-banner">
+          <div class="trial-banner-inner">
+            <div class="trial-icon">🎁</div>
+            <div class="trial-text">
+              <strong id="trial-headline">Free trial</strong>
+              <span id="trial-sub">7 days left</span>
+            </div>
+            <button class="trial-cta" id="trial-cta">Subscribe ₹100 →</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ============ Main ============ -->
+    <main class="main-content">
+      <header class="topbar">
+        <div class="search-area">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search" placeholder="Search every tab across every nest..." autofocus />
+          <kbd class="search-kbd">esc to clear</kbd>
+        </div>
+        <span class="pro-badge" id="hero-pro-badge" style="display:none">PRO ✨</span>
+        <button class="topbar-btn" id="help-btn" title="Help · shortcuts">
+          <span>❓</span>
+        </button>
+      </header>
+
+      <div class="view-container">
+
+        <!-- ============ Nests view ============ -->
+        <div class="view active" data-view="nests">
+          <div class="focus-banner" id="focus-banner">
+            <div class="focus-banner-inner">
+              <div id="focus-banner-text"></div>
+              <button class="focus-end" id="focus-end-btn">End focus</button>
+            </div>
+          </div>
+
+          <div class="view-toolbar">
+            <button class="tool-btn pro-tool" id="smart-cleanup-btn">
+              <div class="tool-row">
+                <span class="tool-ico">🧹</span>
+                <span class="tool-name">Smart Cleanup</span>
+                <span class="pro-pill">PRO</span>
+              </div>
+              <div class="tool-desc">Dedupes + closes old tabs + frees RAM in one click</div>
+            </button>
+            <button class="tool-btn" id="regroup-btn">
+              <div class="tool-row">
+                <span class="tool-ico">🪺</span>
+                <span class="tool-name">Re-nest all</span>
+              </div>
+              <div class="tool-desc">Group every tab into a smart category</div>
+            </button>
+            <button class="tool-btn" id="dedupe-btn">
+              <div class="tool-row">
+                <span class="tool-ico">✂️</span>
+                <span class="tool-name">Dedupe</span>
+              </div>
+              <div class="tool-desc">Close duplicate tabs of the same page</div>
+            </button>
+            <button class="tool-btn pro-tool" id="hibernate-btn">
+              <div class="tool-row">
+                <span class="tool-ico">🛏️</span>
+                <span class="tool-name">Hibernate idle</span>
+                <span class="pro-pill">PRO</span>
+              </div>
+              <div class="tool-desc">Sleep idle tabs to free Chrome's memory</div>
+            </button>
+            <button class="tool-btn" id="save-btn">
+              <div class="tool-row">
+                <span class="tool-ico">🌿</span>
+                <span class="tool-name">Save workspace</span>
+              </div>
+              <div class="tool-desc">Save all current tabs so you can reopen them later</div>
+            </button>
+            <button class="tool-btn pro-tool focus-tool" id="focus-btn">
+              <div class="tool-row">
+                <span class="tool-ico">🎯</span>
+                <span class="tool-name">Focus mode</span>
+                <span class="pro-pill">PRO</span>
+              </div>
+              <div class="tool-desc">Hide distracting nests for a Pomodoro session</div>
+            </button>
+            <button class="tool-btn" id="stale-btn">
+              <div class="tool-row">
+                <span class="tool-ico">🍂</span>
+                <span class="tool-name">Sweep stale</span>
+              </div>
+              <div class="tool-desc">Close tabs you haven't touched in 24+ hours</div>
+            </button>
+            <button class="tool-btn danger-tool" id="ungroup-btn">
+              <div class="tool-row">
+                <span class="tool-ico">📤</span>
+                <span class="tool-name">Ungroup all</span>
+              </div>
+              <div class="tool-desc">Pull every tab out of its nest — tabs stay open</div>
+            </button>
+          </div>
+
+          <section class="view-section">
+            <div class="section-head">
+              <h2><span class="section-icon">🪺</span> Your Nests</h2>
+              <span class="section-meta" id="nests-meta"></span>
+            </div>
+            <div class="nest-grid" id="nest-grid"></div>
+          </section>
+        </div>
+
+        <!-- ============ Workspaces view ============ -->
+        <div class="view" data-view="workspaces" hidden>
+          <section class="view-section">
+            <div class="section-head">
+              <h2><span class="section-icon">🌿</span> Saved Workspaces</h2>
+              <span class="section-meta" id="workspaces-meta">0 saved</span>
+            </div>
+            <div class="workspace-row" id="workspaces-row"></div>
+          </section>
+        </div>
+
+        <!-- ============ Closed view ============ -->
+        <div class="view" data-view="closed" hidden>
+          <section class="view-section archive-section" id="archive-section">
+            <div class="section-head">
+              <h2><span class="section-icon">🔍</span> Recently Closed <span class="pro-pill">PRO</span></h2>
+              <div class="section-meta">
+                <input type="text" id="archive-search" placeholder="Search closed tabs..." />
+                <span id="archive-meta">0</span>
+              </div>
+            </div>
+            <div class="archive-list" id="archive-list"></div>
+            <div class="archive-locked" id="archive-locked" style="display:none">
+              <span>🔒</span>
+              <div>
+                <strong>Free version shows your last 5 closed tabs.</strong>
+                <span>Pro unlocks searchable history for the last 30 days.</span>
+              </div>
+              <button class="ghost-btn" id="archive-unlock-btn" style="width:auto">Unlock Pro</button>
+            </div>
+          </section>
+        </div>
+
+        <!-- ============ Reminders view ============ -->
+        <div class="view" data-view="reminders" hidden>
+          <section class="view-section reminders-section" id="reminders-section">
+            <div class="section-head">
+              <h2><span class="section-icon">🔔</span> Active Reminders</h2>
+              <span class="section-meta" id="reminders-meta">0</span>
+            </div>
+            <div class="reminders-list" id="reminders-list"></div>
+          </section>
+        </div>
+
+        <!-- ============ Stats view ============ -->
+        <div class="view" data-view="stats" hidden>
+          <section class="view-section">
+            <div class="section-head">
+              <h2><span class="section-icon">📊</span> Your Stats</h2>
+              <span class="section-meta">last 7 days</span>
+            </div>
+
+            <div class="hero-stats">
+              <div class="stat">
+                <div class="stat-num" id="stat-tabs">0</div>
+                <div class="stat-label">tabs</div>
+              </div>
+              <div class="stat">
+                <div class="stat-num" id="stat-nests">0</div>
+                <div class="stat-label">nests</div>
+              </div>
+              <div class="stat">
+                <div class="stat-num" id="stat-windows">0</div>
+                <div class="stat-label">windows</div>
+              </div>
+              <div class="stat">
+                <div class="stat-num" id="stat-workspaces">0</div>
+                <div class="stat-label">workspaces</div>
+              </div>
+            </div>
+
+            <div class="metrics-row" id="metrics-row">
+              <div class="metric-card big">
+                <div class="metric-icon">🛏️</div>
+                <div class="metric-num" id="metric-ram">0 MB</div>
+                <div class="metric-label">RAM saved by hibernation</div>
+                <div class="metric-sub" id="metric-ram-sub">Pro feature · running in background</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-icon">📊</div>
+                <div class="metric-num" id="metric-today-tabs">0</div>
+                <div class="metric-label">Tabs opened today</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-icon">✂️</div>
+                <div class="metric-num" id="metric-today-dupes">0</div>
+                <div class="metric-label">Duplicates removed (7 days)</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-icon">🎯</div>
+                <div class="metric-num" id="metric-focus">0</div>
+                <div class="metric-label">Focus sessions (7 days)</div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- ============ Settings view ============ -->
+        <div class="view" data-view="settings" hidden>
+          <section class="view-section">
+            <div class="section-head">
+              <h2><span class="section-icon">⚙️</span> Settings</h2>
+              <span class="section-meta">tune your nest</span>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-title">🎨 Appearance</div>
+              <div class="theme-grid" id="theme-grid"></div>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-title">📐 How to open TabNest</div>
+              <div class="setting-row">
+                <div>
+                  <div class="setting-name">When I click the toolbar icon, open as:</div>
+                  <div class="setting-desc">Popup is fastest; side panel stays open while you browse</div>
+                </div>
+                <select id="set-openas">
+                  <option value="popup">Popup (default)</option>
+                  <option value="sidepanel">Side panel</option>
+                  <option value="tab">Full dashboard tab</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-title">🪺 Behaviour</div>
+              <label class="setting-row">
+                <div>
+                  <div class="setting-name">Auto-group new tabs</div>
+                  <div class="setting-desc">Place each tab into a nest as you browse</div>
+                </div>
+                <input type="checkbox" id="set-autogroup" />
+              </label>
+              <label class="setting-row pause-row">
+                <div>
+                  <div class="setting-name">⏸️ Pause auto-grouping</div>
+                  <div class="setting-desc">Turn off auto-grouping temporarily — turn it back on anytime</div>
+                </div>
+                <input type="checkbox" id="set-pause" />
+              </label>
+              <label class="setting-row">
+                <div>
+                  <div class="setting-name">Re-group on navigation</div>
+                  <div class="setting-desc">Move tabs when their URL changes</div>
+                </div>
+                <input type="checkbox" id="set-onupdate" />
+              </label>
+              <label class="setting-row">
+                <div>
+                  <div class="setting-name">Stale-tab threshold</div>
+                  <div class="setting-desc">How long until a tab is considered stale</div>
+                </div>
+                <select id="set-stale">
+                  <option value="6">6 hours</option>
+                  <option value="12">12 hours</option>
+                  <option value="24">24 hours</option>
+                  <option value="48">2 days</option>
+                  <option value="168">1 week</option>
+                </select>
+              </label>
+              <div class="setting-row" style="border:none; padding-bottom: 4px">
+                <div style="width:100%; display:flex; gap:8px; flex-wrap:wrap">
+                  <button class="ghost-btn" id="ungroup-all-settings" style="flex:1; min-width:160px">📤 Ungroup all current tabs</button>
+                  <button class="ghost-btn danger" id="close-grouped-settings" style="flex:1; min-width:160px">🗑 Close all grouped tabs</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-title">🎯 Your Custom Nests <span class="pro-pill">PRO</span></div>
+              <div class="custom-nests" id="custom-nests"></div>
+              <button class="ghost-btn" id="add-nest-btn">＋ Add a nest</button>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-title">💾 Data</div>
+              <div class="setting-buttons">
+                <button class="ghost-btn" id="export-btn">⬇ Export workspaces</button>
+                <button class="ghost-btn" id="import-btn">⬆ Import workspaces</button>
+                <input type="file" id="import-file" accept="application/json" style="display:none" />
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <div class="settings-section-title">⌨️ Shortcuts</div>
+              <div class="kbd-grid">
+                <div><kbd>Alt+Shift+T</kbd> open popup</div>
+                <div><kbd>Alt+Shift+D</kbd> open dashboard</div>
+                <div><kbd>Alt+Shift+F</kbd> open search</div>
+                <div><kbd>/</kbd> focus search (here)</div>
+                <div><kbd>Esc</kbd> clear search</div>
+              </div>
+              <div class="setting-desc" style="margin-top:8px">
+                Customize at <a href="#" id="open-shortcuts" style="color:var(--brown-primary);font-weight:700">chrome://extensions/shortcuts</a>
+              </div>
+            </div>
+
+            <div class="settings-section pro-section" id="pro-section">
+              <div class="settings-section-title">✨ TabNest Pro</div>
+              <div class="pro-status" id="pro-status"></div>
+
+              <div class="compare-table">
+                <div class="compare-head">
+                  <div></div>
+                  <div class="compare-tier">Free</div>
+                  <div class="compare-tier pro">Pro ✨</div>
+                </div>
+                <div class="compare-row">
+                  <div class="compare-label">🛏️ Tab hibernation (RAM savings)</div>
+                  <div class="compare-cell off">—</div>
+                  <div class="compare-cell on">Auto + manual</div>
+                </div>
+                <div class="compare-row">
+                  <div class="compare-label">🔍 Recently closed archive</div>
+                  <div class="compare-cell off">Last 5</div>
+                  <div class="compare-cell on">30 days · searchable</div>
+                </div>
+                <div class="compare-row">
+                  <div class="compare-label">🧹 Smart Cleanup Wizard</div>
+                  <div class="compare-cell off">—</div>
+                  <div class="compare-cell on">One-click</div>
+                </div>
+                <div class="compare-row">
+                  <div class="compare-label">⏰ Focus mode + Pomodoro</div>
+                  <div class="compare-cell off">—</div>
+                  <div class="compare-cell on">Unlimited</div>
+                </div>
+                <div class="compare-row">
+                  <div class="compare-label">🔔 Tab reminders</div>
+                  <div class="compare-cell off">—</div>
+                  <div class="compare-cell on">Unlimited</div>
+                </div>
+                <div class="compare-row">
+                  <div class="compare-label">📊 Daily/weekly stats</div>
+                  <div class="compare-cell off">Today only</div>
+                  <div class="compare-cell on">Full history</div>
+                </div>
+                <div class="compare-row">
+                  <div class="compare-label">🎯 Custom nests</div>
+                  <div class="compare-cell off">1</div>
+                  <div class="compare-cell on">Unlimited</div>
+                </div>
+                <div class="compare-row">
+                  <div class="compare-label">📝 Tab notes</div>
+                  <div class="compare-cell off">3</div>
+                  <div class="compare-cell on">Unlimited</div>
+                </div>
+                <div class="compare-row">
+                  <div class="compare-label">🎨 Cozy themes</div>
+                  <div class="compare-cell off">Forest only</div>
+                  <div class="compare-cell on">All 4 themes</div>
+                </div>
+                <div class="compare-row">
+                  <div class="compare-label">💝 Updates & support</div>
+                  <div class="compare-cell off">Free updates</div>
+                  <div class="compare-cell on">Priority support</div>
+                </div>
+              </div>
+
+              <div class="pro-pitch">
+                <div class="pitch-line"><strong>One coffee.</strong> One time. Tabs that finally feel sorted.</div>
+              </div>
+
+              <button class="pro-cta" id="pro-cta">
+                <span class="pro-cta-text">Unlock TabNest Pro</span>
+                <span class="pro-cta-price">₹100 · lifetime</span>
+              </button>
+              <button class="pro-key" id="pro-key">Already bought? Activate with email</button>
+            </div>
+          </section>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== Old drawer kept for back-compat — no longer opened by gear icon ===== -->
+  <div class="drawer-overlay" id="drawer" style="display:none">
+    <div class="drawer-card"><div class="drawer-body"></div></div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal-card">
+      <div class="modal-title" id="modal-title">Save your nest</div>
+      <div class="modal-body" id="modal-body">
+        <input type="text" id="modal-input" placeholder="Give it a cozy name..." maxlength="60" />
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn modal-cancel" id="modal-cancel">Cancel</button>
+        <button class="modal-btn modal-ok" id="modal-ok">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Locked overlay shown when trial expires -->
+  <div class="locked-overlay" id="locked-overlay">
+    <div class="locked-card">
+      <div class="locked-emoji">🪺</div>
+      <h2>Your trial ended</h2>
+      <p>It's been 7 days. We hope TabNest made your tabs feel a little more home.</p>
+      <div class="locked-price">
+        <span class="rupee">₹</span><span class="amount">100</span>
+        <span class="period">one-time · lifetime</span>
+      </div>
+      <ul class="locked-features">
+        <li>🛏️ Auto-hibernation that saves GBs of RAM</li>
+        <li>🧹 Smart Cleanup wizard</li>
+        <li>🔍 30-day closed-tabs archive</li>
+        <li>⏰ Focus mode + reminders</li>
+        <li>🎨 All 4 themes</li>
+        <li>💝 Every future feature, forever</li>
+      </ul>
+      <button class="primary-btn" id="locked-subscribe-btn">Subscribe & unlock everything</button>
+      <div class="locked-actions">
+        <button class="ghost-link" id="locked-signin-btn">Already paid? Sign in</button>
+        <button class="ghost-link" id="locked-switch-btn">Switch account</button>
+      </div>
+      <div class="locked-paying" id="locked-paying" style="display:none">
+        <div class="spinner"></div>
+        <span>Waiting for payment confirmation…</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help drawer -->
+  <div class="drawer-overlay" id="help-drawer">
+    <div class="drawer-card help-drawer-card">
+      <div class="drawer-head">
+        <h3>Help &amp; shortcuts</h3>
+        <button class="drawer-close" id="help-drawer-close">✕</button>
+      </div>
+      <div class="drawer-body">
+        <div class="help-section">
+          <div class="help-section-title">👋 New here?</div>
+          <button class="ghost-btn" id="help-replay-tour" style="width:auto; padding:10px 18px">🎯 Replay the welcome tour</button>
+        </div>
+
+        <div class="help-section">
+          <div class="help-section-title">⌨️ Keyboard shortcuts</div>
+          <div class="kbd-grid">
+            <div><kbd>Alt+Shift+T</kbd><span>Open popup</span></div>
+            <div><kbd>Alt+Shift+D</kbd><span>Open this dashboard</span></div>
+            <div><kbd>Alt+Shift+F</kbd><span>Jump to search</span></div>
+            <div><kbd>/</kbd><span>Focus search bar</span></div>
+            <div><kbd>Esc</kbd><span>Clear search · close modals</span></div>
+            <div><kbd>?</kbd><span>Open this help drawer</span></div>
+          </div>
+          <div class="setting-desc" style="margin-top:10px">
+            Change any at <a href="#" id="help-open-shortcuts" style="color:var(--brown-primary);font-weight:700">chrome://extensions/shortcuts</a>
+          </div>
+        </div>
+
+        <div class="help-section">
+          <div class="help-section-title">🪺 What each toolbar button does</div>
+          <div class="help-card-list">
+            <div class="help-card"><div class="help-ico">🧹</div><div><strong>Smart Cleanup</strong><span>One click: dedupes + closes old tabs + hibernates idle. Shows RAM savings estimate.</span></div></div>
+            <div class="help-card"><div class="help-ico">🪺</div><div><strong>Re-nest all</strong><span>Force-organise every open tab into a smart group right now.</span></div></div>
+            <div class="help-card"><div class="help-ico">✂️</div><div><strong>Dedupe</strong><span>Close tabs that point to the same page. Keeps the active or most-recent copy.</span></div></div>
+            <div class="help-card"><div class="help-ico">🛏️</div><div><strong>Hibernate idle</strong><span>Discard memory of tabs you haven't touched in 30 min. They reload when you click them again.</span></div></div>
+            <div class="help-card"><div class="help-ico">🌿</div><div><strong>Save workspace</strong><span>Take a snapshot of all your tabs so you can reopen the whole set later.</span></div></div>
+            <div class="help-card"><div class="help-ico">🎯</div><div><strong>Focus mode</strong><span>Hide distracting nests during a Pomodoro session.</span></div></div>
+            <div class="help-card"><div class="help-ico">🍂</div><div><strong>Sweep stale</strong><span>Close tabs you haven't touched in 24+ hours (configurable in settings).</span></div></div>
+            <div class="help-card"><div class="help-ico">📤</div><div><strong>Ungroup all</strong><span>Pull every tab out of its group, tabs stay open.</span></div></div>
+          </div>
+        </div>
+
+        <div class="help-section">
+          <div class="help-section-title">💡 Tips you might miss</div>
+          <ul class="help-tip-list">
+            <li><strong>Click any sidebar item</strong> to jump between Nests, Workspaces, Closed, Reminders, Stats, and Settings.</li>
+            <li><strong>Hover any nest card</strong> — 📤 and ✕ buttons appear so you can ungroup or close that one nest only.</li>
+            <li><strong>Hover any tab</strong> — small 📋 button lets you add a private note to that URL.</li>
+            <li><strong>"Pause auto-grouping"</strong> in Settings stops TabNest from grouping new tabs until you turn it back on.</li>
+            <li><strong>Undo button on toasts</strong> — after closing tabs, you have 6 seconds to bring them back.</li>
+            <li><strong>Custom nests</strong> live in Settings → Your Custom Nests — make a category for anything (e.g. "Side project").</li>
+          </ul>
+        </div>
+
+        <div class="help-section">
+          <div class="help-section-title">🆘 Common questions</div>
+          <details class="help-details">
+            <summary>TabNest is auto-grouping tabs I don't want grouped</summary>
+            <p>Settings → Behaviour → toggle "⏸️ Pause auto-grouping". You can still re-nest manually with the toolbar button.</p>
+          </details>
+          <details class="help-details">
+            <summary>The colored chips in my bookmark bar — are those TabNest?</summary>
+            <p>Those are Chrome's "saved tab groups" — a Chrome feature, not TabNest. Right-click each → Delete group, or disable at chrome://settings/tabs.</p>
+          </details>
+          <details class="help-details">
+            <summary>I closed important tabs by mistake</summary>
+            <p>Toasts have an "Undo" button for 6 seconds. After that, find them in the "Closed" sidebar section — kept for 30 days.</p>
+          </details>
+          <details class="help-details">
+            <summary>How do I move my Pro to a different email?</summary>
+            <p>Settings → TabNest Pro → "Switch account". Enter your new email — your trial or Pro state transfers, no reset.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- First-time tour -->
+  <div class="tour-overlay" id="tour-overlay">
+    <div class="tour-spotlight" id="tour-spotlight"></div>
+    <div class="tour-popover" id="tour-popover">
+      <div class="tour-step-counter" id="tour-step-counter">1 of 6</div>
+      <div class="tour-title" id="tour-title"></div>
+      <div class="tour-body" id="tour-body"></div>
+      <div class="tour-actions">
+        <button class="tour-skip" id="tour-skip">Skip tour</button>
+        <button class="tour-next" id="tour-next">Got it →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden gear button kept so legacy listeners don't error -->
+  <button id="settings-btn" style="display:none"></button>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="config.js"></script>
+  <script src="themes.js"></script>
+  <script src="categories.js"></script>
+  <script src="account.js"></script>
+  <script src="pro.js"></script>
+  <script src="notes.js"></script>
+  <script src="hibernation.js"></script>
+  <script src="archive.js"></script>
+  <script src="stats.js"></script>
+  <script src="reminders.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

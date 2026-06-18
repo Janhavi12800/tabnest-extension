@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="forest">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to TabNest</title>
+  <link rel="icon" href="icons/icon48.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="themes.css">
+  <link rel="stylesheet" href="onboarding.css">
+</head>
+<body>
+  <div class="bg-decor">
+    <svg class="leaf leaf-1" viewBox="0 0 60 60"><path d="M30 5 C 15 15 10 35 30 55 C 50 35 45 15 30 5 Z" fill="currentColor"/></svg>
+    <svg class="leaf leaf-2" viewBox="0 0 60 60"><path d="M30 5 C 15 15 10 35 30 55 C 50 35 45 15 30 5 Z" fill="currentColor"/></svg>
+    <svg class="leaf leaf-3" viewBox="0 0 60 60"><path d="M30 5 C 15 15 10 35 30 55 C 50 35 45 15 30 5 Z" fill="currentColor"/></svg>
+    <svg class="leaf leaf-4" viewBox="0 0 60 60"><path d="M30 5 C 15 15 10 35 30 55 C 50 35 45 15 30 5 Z" fill="currentColor"/></svg>
+    <svg class="leaf leaf-5" viewBox="0 0 60 60"><path d="M30 5 C 15 15 10 35 30 55 C 50 35 45 15 30 5 Z" fill="currentColor"/></svg>
+  </div>
+
+  <div class="onboarding">
+    <div class="slides" id="slides">
+      <!-- Slide 1: Welcome -->
+      <section class="slide active" data-step="1">
+        <div class="hero-emoji">🪺</div>
+        <h1 class="caveat">Welcome to TabNest!</h1>
+        <p class="lead">A cozy little home for your tabs — auto-organised, beautifully.</p>
+        <div class="feature-row">
+          <div class="feature">
+            <div class="feature-icon">🪺</div>
+            <div class="feature-text">
+              <strong>Auto-nest</strong>
+              <span>Every tab tucks into a smart group as you browse.</span>
+            </div>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">🛏️</div>
+            <div class="feature-text">
+              <strong>Save GBs of RAM</strong>
+              <span>Idle tabs hibernate to free up Chrome's memory.</span>
+            </div>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">🧹</div>
+            <div class="feature-text">
+              <strong>One-click cleanup</strong>
+              <span>Dedupe + close stale + hibernate in one button.</span>
+            </div>
+          </div>
+        </div>
+        <div class="trial-banner-card">
+          <div class="trial-banner-emoji">🎁</div>
+          <div>
+            <strong>7 days free, all features unlocked</strong>
+            <span>then ₹100 lifetime — no subscription, no renewals.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 2: Email signup -->
+      <section class="slide" data-step="2">
+        <div class="hero-emoji">📧</div>
+        <h1 class="caveat">Sign up with your email</h1>
+        <p class="lead">We'll email you a 6-digit code to activate. No password, no spam.</p>
+        <div class="signup-card">
+          <div class="signup-field">
+            <label for="signup-email">Your email</label>
+            <input type="email" id="signup-email" placeholder="you@example.com" autocomplete="email" />
+          </div>
+          <button class="primary-btn full" id="send-code-btn">Send me a code →</button>
+          <div class="signup-error" id="signup-error"></div>
+          <div class="signup-hint">
+            🔒 We only use your email to verify your account. <a href="https://janhavi12800.github.io/tabnest-website/privacy.html" target="_blank" rel="noopener">Privacy policy</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 3: Code verification -->
+      <section class="slide" data-step="3">
+        <div class="hero-emoji">🔑</div>
+        <h1 class="caveat">Check your email</h1>
+        <p class="lead">We sent a 6-digit code to <strong id="verify-email-out">your email</strong>. Paste it below.</p>
+        <div class="signup-card">
+          <div class="signup-field">
+            <label for="verify-code">6-digit code</label>
+            <input type="text" id="verify-code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="123456" autocomplete="one-time-code" />
+          </div>
+          <button class="primary-btn full" id="verify-btn">Activate TabNest</button>
+          <div class="signup-error" id="verify-error"></div>
+          <div class="signup-hint">
+            Didn't get it? Check spam, or
+            <a href="#" id="resend-link">resend code</a> ·
+            <a href="#" id="change-email-link">change email</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 4: Theme picker -->
+      <section class="slide" data-step="4">
+        <div class="hero-emoji">🎨</div>
+        <h1 class="caveat">Pick a theme</h1>
+        <p class="lead">All four are unlocked during your trial. Pick the one that feels like home.</p>
+        <div class="theme-grid onboarding-themes" id="theme-grid"></div>
+      </section>
+
+      <!-- Slide 5: Done -->
+      <section class="slide" data-step="5">
+        <div class="hero-emoji">🪶</div>
+        <h1 class="caveat">You're in!</h1>
+        <p class="lead" id="done-message">7 days of every feature, fully unlocked. Pin TabNest to your toolbar so it's always one click away.</p>
+        <div class="pin-illustration">
+          <div class="pin-bar">
+            <span class="pin-icon">🧩</span>
+            <span class="pin-arrow">↘</span>
+            <span class="pin-pill">📌 Pin TabNest</span>
+          </div>
+          <p class="pin-caption">Click the puzzle 🧩 icon in your toolbar, then pin TabNest.</p>
+        </div>
+        <div class="cta-row">
+          <button class="primary-btn" id="open-dashboard">Open my dashboard 🪺</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="nav">
+      <div class="dots" id="dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      <div class="nav-buttons">
+        <button class="nav-btn" id="prev" disabled>← Back</button>
+        <button class="nav-btn primary" id="next">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="themes.js"></script>
+  <script src="account.js"></script>
+  <script src="onboarding.js"></script>
+</body>
+</html>

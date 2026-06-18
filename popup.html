@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html data-theme="forest">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="themes.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="logo">
+        <div class="logo-icon">🪺</div>
+        <div class="logo-text">
+          <h1>TabNest</h1>
+          <span class="subtitle"><span id="tab-count">0</span> tabs in <span id="nest-count">0</span> nests</span>
+        </div>
+      </div>
+      <button class="icon-btn" id="dashboard-btn" title="Open full dashboard">⛶</button>
+    </header>
+
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search" placeholder="Search your tabs..." />
+    </div>
+
+    <div class="actions">
+      <button class="action-btn" id="regroup-btn" title="Re-organize all tabs into nests">
+        <span class="action-icon">🪺</span>
+        <span class="action-label">Re-nest</span>
+      </button>
+      <button class="action-btn" id="dedupe-btn" title="Remove duplicate tabs">
+        <span class="action-icon">✂️</span>
+        <span class="action-label">Dedupe</span>
+      </button>
+      <button class="action-btn" id="save-btn" title="Save current window as workspace">
+        <span class="action-icon">🌿</span>
+        <span class="action-label">Save</span>
+      </button>
+      <button class="action-btn" id="stale-btn" title="Close untouched tabs">
+        <span class="action-icon">🍂</span>
+        <span class="action-label">Stale</span>
+      </button>
+    </div>
+
+    <div class="section-title">
+      <span class="title-line"></span>
+      <span class="title-text">Your Nests</span>
+      <span class="title-line"></span>
+    </div>
+
+    <div class="nests" id="nests"></div>
+
+    <div class="section-title">
+      <span class="title-line"></span>
+      <span class="title-text">Saved Workspaces</span>
+      <span class="title-line"></span>
+    </div>
+
+    <div class="workspaces" id="workspaces"></div>
+
+    <div class="pro-strip" id="pro-strip" style="display:none">
+      <div class="pro-strip-text">
+        <strong>✨ Save GBs of RAM with Pro</strong>
+        <span>Hibernation · cleanup wizard · stats · reminders · themes</span>
+      </div>
+      <button class="pro-strip-btn" id="pro-strip-btn">₹100</button>
+    </div>
+
+    <footer class="footer">
+      <span>made with 🪶 — alt+shift+t to open</span>
+    </footer>
+  </div>
+
+  <div class="modal-overlay" id="modal">
+    <div class="modal-card">
+      <div class="modal-title" id="modal-title">Save your nest</div>
+      <div class="modal-body" id="modal-body">
+        <input type="text" id="modal-input" placeholder="Give it a cozy name..." maxlength="60" />
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn modal-cancel" id="modal-cancel">Cancel</button>
+        <button class="modal-btn modal-ok" id="modal-ok">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="config.js"></script>
+  <script src="themes.js"></script>
+  <script src="categories.js"></script>
+  <script src="account.js"></script>
+  <script src="pro.js"></script>
+  <script src="notes.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

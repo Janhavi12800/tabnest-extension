@@ -1,0 +1,237 @@
+/* TabNest themes — CSS variable overrides per theme.
+   Forest is the default (defined in popup.css / dashboard.css :root blocks).
+   Other themes override via [data-theme="..."]. */
+
+/* ---------- Forest (defaults; declared here for completeness) ---------- */
+[data-theme="forest"] {
+  --bg-main: #FBF5E6;
+  --bg-soft: #F7EFDB;
+  --bg-card: #FFFDF7;
+  --bg-card-hover: #F5E6CB;
+  --bg-accent: #F0E2C4;
+  --brown-primary: #8B6F47;
+  --brown-dark: #6B4423;
+  --brown-deep: #4A3424;
+  --text-dark: #3E2C1A;
+  --text-medium: #6B5A47;
+  --text-light: #A89684;
+  --border: #E8DBC2;
+  --border-soft: #F0E5CC;
+  --gold: #D4A574;
+  --gold-soft: #E8C896;
+  --green: #7A9B7E;
+  --green-soft: #A8C4AB;
+  --moss: #5C7B5C;
+  --orange: #E07856;
+  --berry: #C45C5C;
+  --sky: #B8C9D9;
+  --shadow: rgba(74, 56, 41, 0.08);
+  --shadow-md: rgba(74, 56, 41, 0.15);
+  --shadow-lg: rgba(74, 56, 41, 0.25);
+  --page-glow-1: rgba(212, 165, 116, 0.10);
+  --page-glow-2: rgba(122, 155, 126, 0.08);
+  --page-glow-3: rgba(224, 120, 86, 0.05);
+}
+
+/* ---------- Sunset ---------- */
+[data-theme="sunset"] {
+  --bg-main: #FFEEDC;
+  --bg-soft: #FFE4C8;
+  --bg-card: #FFFAF2;
+  --bg-card-hover: #FFE2C0;
+  --bg-accent: #FFD9B0;
+  --brown-primary: #C0673E;
+  --brown-dark: #9B4E2A;
+  --brown-deep: #6B3414;
+  --text-dark: #5C2A1A;
+  --text-medium: #8C5234;
+  --text-light: #C99572;
+  --border: #F4CCA0;
+  --border-soft: #FAE0BE;
+  --gold: #F4A261;
+  --gold-soft: #FFC089;
+  --green: #E27B58;
+  --green-soft: #F4A28D;
+  --moss: #B85838;
+  --orange: #E07856;
+  --berry: #C45C5C;
+  --sky: #E8B894;
+  --shadow: rgba(120, 50, 20, 0.10);
+  --shadow-md: rgba(120, 50, 20, 0.18);
+  --shadow-lg: rgba(120, 50, 20, 0.28);
+  --page-glow-1: rgba(244, 162, 97, 0.14);
+  --page-glow-2: rgba(226, 123, 88, 0.10);
+  --page-glow-3: rgba(255, 192, 137, 0.08);
+}
+
+/* ---------- Midnight (dark mode) ---------- */
+[data-theme="midnight"] {
+  --bg-main: #161A2E;
+  --bg-soft: #1E2342;
+  --bg-card: #232847;
+  --bg-card-hover: #2D3358;
+  --bg-accent: #353C66;
+  --brown-primary: #D4A574;
+  --brown-dark: #E8C896;
+  --brown-deep: #F4D58D;
+  --text-dark: #ECE6D5;
+  --text-medium: #B2AB99;
+  --text-light: #757062;
+  --border: #353C66;
+  --border-soft: #444C7A;
+  --gold: #F4D58D;
+  --gold-soft: #FFE5A8;
+  --green: #9CC4A2;
+  --green-soft: #B0D4B5;
+  --moss: #88B08E;
+  --orange: #FF9978;
+  --berry: #E07A8A;
+  --sky: #8FA4D9;
+  --shadow: rgba(0, 0, 0, 0.30);
+  --shadow-md: rgba(0, 0, 0, 0.45);
+  --shadow-lg: rgba(0, 0, 0, 0.60);
+  --page-glow-1: rgba(212, 165, 116, 0.08);
+  --page-glow-2: rgba(156, 196, 162, 0.07);
+  --page-glow-3: rgba(255, 153, 120, 0.05);
+}
+
+/* ---------- Cherry blossom ---------- */
+[data-theme="cherry"] {
+  --bg-main: #FFF0F3;
+  --bg-soft: #FFE3E8;
+  --bg-card: #FFFAFB;
+  --bg-card-hover: #FFD9E0;
+  --bg-accent: #FFCCDB;
+  --brown-primary: #C77B8E;
+  --brown-dark: #A05968;
+  --brown-deep: #6B3848;
+  --text-dark: #5C2434;
+  --text-medium: #8B4A5C;
+  --text-light: #C58FA0;
+  --border: #F4C0CC;
+  --border-soft: #FADCE3;
+  --gold: #F4A1B0;
+  --gold-soft: #FFB8C4;
+  --green: #B8C9A8;
+  --green-soft: #CCDABE;
+  --moss: #9CB098;
+  --orange: #FF7B91;
+  --berry: #E04055;
+  --sky: #E4B0C5;
+  --shadow: rgba(120, 30, 60, 0.10);
+  --shadow-md: rgba(120, 30, 60, 0.18);
+  --shadow-lg: rgba(120, 30, 60, 0.28);
+  --page-glow-1: rgba(244, 161, 176, 0.14);
+  --page-glow-2: rgba(184, 201, 168, 0.08);
+  --page-glow-3: rgba(255, 123, 145, 0.08);
+}
+
+/* ---------- Theme picker UI (used in settings drawer) ---------- */
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.theme-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.theme-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+.theme-card.active {
+  border-color: var(--brown-primary);
+  background: var(--bg-card-hover);
+}
+.theme-card.active::after {
+  content: '✓ Active';
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.theme-card.locked {
+  opacity: 0.65;
+  cursor: pointer;
+  position: relative;
+}
+.theme-card.locked:hover {
+  opacity: 0.85;
+  border-color: var(--gold);
+}
+
+.theme-lock {
+  margin-left: auto;
+  background: linear-gradient(135deg, var(--gold), var(--orange));
+  color: white;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+
+.theme-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.theme-icon {
+  font-size: 18px;
+}
+.theme-name {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text-dark);
+}
+
+.theme-desc {
+  font-size: 11px;
+  color: var(--text-medium);
+  line-height: 1.35;
+}
+
+.theme-swatches {
+  display: flex;
+  gap: 4px;
+}
+.theme-swatch {
+  flex: 1;
+  height: 18px;
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Dark-mode tweaks for input fields and toggles */
+[data-theme="midnight"] input[type="text"],
+[data-theme="midnight"] input[type="search"],
+[data-theme="midnight"] textarea,
+[data-theme="midnight"] select,
+[data-theme="midnight"] #search,
+[data-theme="midnight"] #modal-input {
+  background: var(--bg-soft);
+  color: var(--text-dark);
+}
+
+[data-theme="midnight"] kbd {
+  background: var(--bg-accent);
+  color: var(--gold);
+  border-color: var(--border);
+}
+
+[data-theme="midnight"] .nest-icon,
+[data-theme="midnight"] .nest-card-icon {
+  box-shadow: inset 0 -3px 8px rgba(0,0,0,0.25);
+}

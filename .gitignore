@@ -1,0 +1,29 @@
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor configs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Owner-only tools (NEVER commit these — they contain license-generation logic
+# from older versions and could be sensitive). They live in a separate folder
+# outside this repo anyway, but extra safety just in case.
+TabNest-OwnerTools/
+*-OwnerTools/
+gen-license.html
+Code.gs
+
+# Build artifacts / zips for Chrome Web Store
+*.zip
+*.crx
+build/
+dist/
+
+# Local environment overrides
+.env
+.env.local
+secrets.json
