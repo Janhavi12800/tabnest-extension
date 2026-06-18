@@ -324,10 +324,33 @@ function renderFocusUI() {
   `;
 }
 
+function renderProfileCard() {
+  const card = $('#profile-card');
+  if (!card) return;
+  const email = accountState.email;
+  if (!email || (accountState.status !== 'pro' && accountState.status !== 'trial')) {
+    card.style.display = 'none';
+    return;
+  }
+  card.style.display = '';
+  card.classList.toggle('is-pro', accountState.status === 'pro');
+  card.classList.toggle('is-trial', accountState.status === 'trial');
+  $('#profile-avatar').textContent = (email[0] || '?');
+  $('#profile-email').textContent = email;
+  if (accountState.status === 'pro') {
+    $('#profile-status').textContent = '✨ Pro active';
+  } else if (accountState.status === 'trial') {
+    const left = (accountState.trialEnd || 0) - Date.now();
+    const days = Math.max(0, Math.ceil(left / (24 * 60 * 60 * 1000)));
+    $('#profile-status').textContent = `🎁 Trial · ${days} day${days === 1 ? '' : 's'} left`;
+  }
+}
+
 function renderAccessState() {
   const banner = $('#trial-banner');
   const overlay = $('#locked-overlay');
   if (!banner || !overlay) return;
+  renderProfileCard();
 
   // Pro user → never show the trial banner (sidebar overrides max-height tricks).
   if (accountState.status === 'pro') {

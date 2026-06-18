@@ -213,6 +213,68 @@ body {
   border-top: 1.5px dashed var(--border);
 }
 
+/* ---------- Sidebar profile card ---------- */
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  transition: border-color 0.15s;
+}
+.profile-card.is-pro {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, var(--bg-card), rgba(212, 165, 116, 0.10));
+}
+.profile-card.is-trial {
+  border-color: var(--green-soft);
+  background: linear-gradient(135deg, var(--bg-card), rgba(122, 155, 126, 0.08));
+}
+.profile-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brown-primary), var(--brown-dark));
+  color: var(--bg-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 14px;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.profile-card.is-pro .profile-avatar {
+  background: linear-gradient(135deg, var(--gold), var(--orange));
+}
+.profile-info {
+  flex: 1;
+  min-width: 0;
+}
+.profile-email {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.1px;
+}
+.profile-status {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-medium);
+  margin-top: 1px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.profile-card.is-pro .profile-status { color: var(--brown-dark); }
+.profile-card.is-trial .profile-status { color: var(--moss); }
+
 /* Compact trial banner inside sidebar */
 .side-nav .trial-banner {
   max-height: none;
